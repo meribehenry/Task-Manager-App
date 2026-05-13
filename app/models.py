@@ -1,11 +1,6 @@
 from datetime import datetime
 from flask_login import UserMixin
-from app.extensions import login_manger, db
-
-
-@login_manger.user_loader
-def load_user(user_id):
-    return User.query.get(int(user_id))
+from app.extensions import db
 
 
 class User(db.Model, UserMixin):
@@ -41,4 +36,3 @@ class Task(db.Model):
         Deadline: {self.deadline}
         Status: {'Complete' if {self.is_complete} else 'Pending'}
         """
-

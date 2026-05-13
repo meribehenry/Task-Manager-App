@@ -5,5 +5,5 @@ from flask_bcrypt import Bcrypt
 
 db = SQLAlchemy()
 migrate = Migrate()
-login_manger = LoginManager()
+login_manager = LoginManager()
 bcrypt = Bcrypt()
