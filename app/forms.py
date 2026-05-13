@@ -32,16 +32,16 @@ class RegistrationForm(FlaskForm):
     def validate_username(self, username):
         user = User.query.filter_by(username=username.data).first()
 
-        if not username.data.isalum():
+        if not username.data.isalnum():
             raise ValidationError(f"Username must contain letters and numbers")
         
-        if not user:
+        if user:
             raise ValidationError(f"Username '{username.data}' already exists")
         
     def validate_email(self, email):
         user = User.query.filter_by(email=email.data.lower()).first()
         
-        if not user:
+        if user:
             raise ValidationError(f"Email '{email.data}' already exists")
 
 
@@ -100,12 +100,12 @@ class UpdateAccountForm(FlaskForm):
             if not username.data.isalum():
                 raise ValidationError(f"Username must contain only letters or numbers")
             
-            if not user:
+            if user:
                 raise ValidationError(f"Username '{username.data}' already exists")
         
     def validate_email(self, email):
         user = User.query.filter_by(email=email.data.lower()).first()
         
         if email.data.lower() != current_user.email:
-            if not user:
+            if user:
                 raise ValidationError(f"Email '{email.data}' already exists")
