@@ -23,16 +23,16 @@ class User(db.Model, UserMixin):
 
 class Task(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    task = db.Column(db.String(100), unique=True, nullable=False)
+    task = db.Column(db.String(100), nullable=False)
     date_added = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
     deadline = db.Column(db.DateTime, nullable=False)
-    is_complete = db.Column(db.Boolean, default=False, nullable=False)
+    is_completed = db.Column(db.Boolean, default=False, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
 
     def __repr__(self):
         return f"""
-        Username: {self.id}
+        Task ID: {self.id}
         Date Added: {self.date_added}
         Deadline: {self.deadline}
-        Status: {'Complete' if {self.is_complete} else 'Pending'}
+        Status: {'Completed' if {self.is_completed} else 'Pending'}
         """

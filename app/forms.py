@@ -9,20 +9,20 @@ from app.models import User
 class RegistrationForm(FlaskForm):
     username = StringField("Username", 
                             validators=[DataRequired(message="Please enter this field"), 
-                            Length(min=2, max=20, messsage="Username must be within 2-20 characters long")])
+                            Length(min=2, max=20, message="Username must be within 2-20 characters long")])
     
     email = EmailField("Email", 
                        validators=[
                             DataRequired(message="Please enter this field"), 
                             Email(message="Please enter a valid email"), 
-                            Length(max=100, messsage="Email cannot be more than 100 characters long")])
+                            Length(max=100, message="Email cannot be more than 100 characters long")])
     
     password = PasswordField("Password", 
                             validators=[
                                 DataRequired(message="Please enter this field"),
-                                Length(min=5, messsage="Password must be atleast 5 characters long")])
+                                Length(min=5, message="Password must be atleast 5 characters long")])
     
-    confirm_massword = PasswordField("Password", validators=[DataRequired(), EqualTo("password")])
+    confirm_password = PasswordField("Confirm Password", validators=[DataRequired(), EqualTo("password")])
 
     gender = RadioField(choices=[("male", "Male"), ("female", "Female")], validators=[DataRequired()])
 
@@ -33,7 +33,7 @@ class RegistrationForm(FlaskForm):
         user = User.query.filter_by(username=username.data).first()
 
         if not username.data.isalum():
-            raise ValidationError(f"Username must contain only letters or numbers")
+            raise ValidationError(f"Username must contain letters and numbers")
         
         if not user:
             raise ValidationError(f"Username '{username.data}' already exists")
@@ -50,12 +50,12 @@ class LoginForm(FlaskForm):
                        validators=[
                             DataRequired(message="Please enter this field"), 
                             Email(message="Please enter a valid email"), 
-                            Length(max=100, messsage="Email cannot be more than 100 characters long")])
+                            Length(max=100, message="Email cannot be more than 100 characters long")])
     
     password = PasswordField("Password", 
                              validators=[
                                 DataRequired(message="Please enter this field"),
-                                Length(min=5, messsage="Password must be atleast 5 characters long")])
+                                Length(min=5, message="Password must be atleast 5 characters long")])
 
     remember = BooleanField("Remember Me")
 
@@ -63,9 +63,9 @@ class LoginForm(FlaskForm):
 
 
 class TaskForm(FlaskForm):
-    task = StringField("Username", 
+    task = StringField("Task", 
                         validators=[DataRequired(message="Please enter this field"), 
-                        Length(max=500, messsage="Task cannot be more than 500 characters long")])
+                        Length(max=500, message="Task cannot be more than 500 characters long")])
     
     deadline = DateTimeField("Deadline", 
                             validators=[DataRequired(message="Please enter this field")], 
@@ -82,13 +82,13 @@ class MarkTaskForm(FlaskForm):
 class UpdateAccountForm(FlaskForm):
     username = StringField("Username", 
                             validators=[DataRequired(message="Please enter this field"), 
-                            Length(min=2, max=20, messsage="Username must be within 2-20 characters long")])
+                            Length(min=2, max=20, message="Username must be within 2-20 characters long")])
     
     email = EmailField("Email", 
                         validators=[
                             DataRequired(message="Please enter this field"), 
                             Email(message="Please enter a valid email"), 
-                            Length(max=100, messsage="Email cannot be more than 100 characters long")])
+                            Length(max=100, message="Email cannot be more than 100 characters long")])
     
     profile_pic = FileField("Upload Image", validators=[FileAllowed(["png", "jpg", "jpeg", "img"])])
 
