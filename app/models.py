@@ -15,6 +15,7 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(100), nullable=False)
     gender = db.Column(db.String(10), nullable=False)
     profile_pic = db.Column(db.String(20), default="default_pic.jpg", nullable=False)
+    completed_task = db.Column(db.Integer, default=0, nullable=False)
     tasks = db.relationship("Task", backref="user", lazy=True)
 
     def __repr__(self):
