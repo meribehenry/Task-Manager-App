@@ -1,7 +1,7 @@
 from flask_login import current_user
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
-from wtforms import StringField, EmailField, PasswordField, RadioField, BooleanField, SubmitField, DateTimeField
+from wtforms import StringField, EmailField, PasswordField, RadioField, BooleanField, SubmitField, TextAreaField, DateTimeLocalField
 from wtforms.validators import Email, EqualTo, DataRequired, Length, ValidationError
 from app.models import User
 
@@ -63,20 +63,13 @@ class LoginForm(FlaskForm):
 
 
 class TaskForm(FlaskForm):
-    task = StringField("Task", 
+    task = TextAreaField("Task", 
                         validators=[DataRequired(message="Please enter this field"), 
                         Length(max=500, message="Task cannot be more than 500 characters long")])
     
-    deadline = DateTimeField("Deadline", 
-                            validators=[DataRequired(message="Please enter this field")], 
-                            format= "%Y-%m-%d %H:%M")
+    deadline = DateTimeLocalField("Deadline",  format= "%Y-%m-%dT%H:%M", render_kw={"step":"60"})
     
     submit = SubmitField("Add")
-
-
-class MarkTaskForm(FlaskForm):
-    complete = BooleanField()
-    submit = SubmitField("Mark Complete")
 
 
 class UpdateAccountForm(FlaskForm):
@@ -91,6 +84,8 @@ class UpdateAccountForm(FlaskForm):
                             Length(max=100, message="Email cannot be more than 100 characters long")])
     
     profile_pic = FileField("Upload Image", validators=[FileAllowed(["png", "jpg", "jpeg", "img"])])
+    
+    submit = SubmitField("Update")
 
 
     def validate_username(self, username):
