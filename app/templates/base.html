@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+</head>
+<body>
+    <header>
+        <h2 class= style="color: brown;">Task Manager</h2>
+        <hr>
+        <br>
+    </header>
+
+    <nav>
+        <a href="{{ url_for('main.home') }}"><button type="button">Home</button></a>
+        <a href="{{ url_for('main.about') }}"><button type="button">About</button></a>
+        <a href="{{ url_for('main.dashboard') }}"><button type="button">Dashboard</button></a>
+        {% if current_user.is_authenticated %}
+            <a href="{{ url_for('main.leaderboard') }}"><button type="button">Leaderboard</button></a>
+            <a href="{{ url_for('task.add_task') }}"><button type="button">Add Task</button></a>
+            <a href="{{ url_for('account.user_account') }}"><button type="button">Account</button></a>
+            <a href="{{ url_for('auth.logout') }}"><button type="button">Logout</button></a>
+        {% else %}
+            <a href="{{url_for('auth.register')}}"><button type="button">Register</button></a>
+            <a href="{{url_for('auth.login')}}"><button type="button">Login</button></a>
+        {% endif %}
+    </nav>
+
+    <main>
+        {% with messages = get_flashed_messages(with_categories=True)%}
+            {% for category, message in messages %}
+                {% if category == 'success'%}
+                    <p style="color: green;">{{ message }}</p>
+                {% else %}
+                    <p style="color: red;">{{ message }}</p>
+                {% endif %}
+            {% endfor %}
+        {% endwith %}
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <footer>
+        <p><small>2026 B-CODE Project</small></p>
+    </footer>
+    
+</body>
+</html>

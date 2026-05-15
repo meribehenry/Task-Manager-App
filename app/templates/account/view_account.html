@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+    <article style="display: contents;">
+        <br><br>
+        <img src="{{ url_for('static', filename='profile_pics/' + user.profile_pic)}}" alt="Profile Picture" width="100" height="100" style="border-radius: 100%;">
+        <br><br>
+        <h3>Account</h3>
+        <p>Name: {{ user.username }}</p>
+        <p>Gender: {{ user.gender }}</p>
+        <p>Number of completed tasks: {{ user.completed_task }}</p>
+        <br>
+    </article>
+    {% if current_user == user %}
+        <button type="button"><a style="color: gold;" href="{{ url_for('account.user_account')}}">Edit Account</a></button>
+    {% endif %}
+{% endblock %}

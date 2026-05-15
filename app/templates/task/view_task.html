@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+    <section>
+        <br><br>
+        <img src="{{ url_for('static', filename='profile_pics/' + current_user.profile_pic)}}" alt="Profile Picture" width="100" height="100" style="border-radius: 100%;">
+        <br>
+        <p><a href="{{ url_for('account.user_account') }}">{{ task.user.username | upper}}</a></p>
+
+        <div>
+            <small>Date created: {{ task.date_added.strftime("%Y-%m-%d %H:%M") }}</small><br>
+            <small>Deadline: {{ task.deadline }}</small><br>
+            {% if task.is_completed%}
+                <small>Status: Completed</small>
+            {% else %}
+                <small>Status: Pending</small>
+            {% endif %}
+            <p><strong>Task</strong></p>
+            <p>{{task.task}}</p>
+        </div>
+        <div>
+            {% if not task.is_completed %}
+                <a href="{{url_for('task.update_task', task_id=task.id)}}"><button type="button" style="color: goldenrod;">Update</button></a>
+                <a href="{{url_for('task.mark_task', task_id=task.id)}}"><button type="button" style="color: green;">Mark Complete</button></a>
+            {% endif %}
+            <a href="{{url_for('task.delete_task', task_id=task.id)}}"><button style="color: red;" type="button">Delete</button></a>        
+        </div>
+    </section>
+{% endblock%}

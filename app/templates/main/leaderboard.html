@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+    <h1>Leader Board</h1>
+
+    <section>
+        <table border="1">
+            <thead>
+                <label>TOP USERS WITH MOST COMPLETED TASK</label>
+                <tr>
+                    <th>#</th>
+                    <th>Username</th>
+                    <th>Number of Completed Tasks</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                    <tr>
+                        <td>{{ loop.index }}.</td>
+                        <td><a href="{{ url_for('account.view_account', user_id=user.id) }}">{{ user.username }}</a></td>
+                        <td>{{ user.completed_task }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
+
+{% endblock %}

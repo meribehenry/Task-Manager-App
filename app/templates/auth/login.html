@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block content %}
+    <h1>Login</h1>
+
+    <section>
+        <form action="" method="POST">
+            {{ form.hidden_tag( )}}
+
+            <div>
+                {{ form.email.label() }}
+                {{ form.email() }}
+
+                {% if form.email.errors %}
+                    {% for error in form.email.errors%}
+                        <small style="color: red;">{{ error }}</small><br>
+                    {% endfor %}
+                {% endif %}
+                <br><br>
+            </div>
+            <div>
+                {{ form.password.label() }}
+                {{ form.password() }}
+
+                {% if form.password.errors %}
+                    {% for error in form.password.errors%}
+                        <small style="color: red;">{{ error }}</small><br>
+                    {% endfor %}
+                {% endif %}
+                <br><br>
+            </div>
+            <div>
+                {{ form.remember() }}
+                {{ form.remember.label() }}
+                <br><br>
+            </div>
+            <div>
+                {{ form.submit()}}
+                <br><br>
+            </div>
+        </form>
+        <p>Don't have an account? <a href="{{url_for('auth.register')}}">Sign Up</a></p>
+    </section>
+{% endblock %}

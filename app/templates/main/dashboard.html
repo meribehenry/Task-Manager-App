@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+    <p>Welcome <a href="{{ url_for('account.view_account', user_id=current_user.id) }}">{{ current_user.username }}</a></p>
+    <h1>Dashboard</h1>
+    <section>
+        {% for task in current_user.tasks[::-1] %} 
+            <p><a href="{{ url_for('task.view_task', task_id=task.id)}}"><strong>Task {{loop.index}}</strong></a></p>
+            <div>
+                <small>Date created: {{ task.date_added.strftime("%Y-%m-%d %H:%M") }}</small><br>
+                <small>Deadline: {{ task.deadline }}</small><br>
+                {% if task.is_completed%}
+                    <small style="color: green;">Status: Completed</small>
+                {% else %}
+                    <small style="color: read;">Status: Pending</small>
+                {% endif %}
+                <p>Task: <a href="{{ url_for('task.view_task', task_id=task.id)}}">{{task.task}}</a></p>
+            </div>
+        {% endfor %}
+    </section>    
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block content %}
+    <article>
+        <h2>{{ title }}</h2>
+        <div>
+            <form action="" method="POST">
+                {{ form.hidden_tag()}}
+
+                <div>
+                    {{ form.task.label }} <br>
+                    {{ form.task() }}
+
+                    {% if form.task.errors %}
+                        {% for error in form.task.errors%}
+                            <br><small style="color: red;">{{ error }}</small><br>
+                        {% endfor %}
+                    {% endif %}
+                    <br><br>
+                </div>
+                <div>
+                    {{ form.deadline.label }}<br>
+                    {{ form.deadline() }}
+
+                    {% if form.deadline.errors %}
+                        {% for error in form.deadline.errors%}
+                            <br><small style="color: red;">{{ error }}</small><br>
+                        {% endfor %}
+                    {% endif %}
+                    <br><br>
+                </div>
+                <div>
+                    <br>
+                    {{ form.submit() }}
+                </div>
+            </form>
+        </div>
+    </article>
+{% endblock%}

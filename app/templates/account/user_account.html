@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block content %}
+    <article>
+        <h2>Account</h2>
+        <img src="{{ url_for('static', filename='profile_pics/' + current_user.profile_pic)}}" alt="Profile Picture" width="100" height="100" style="border-radius: 100%;">
+        <br><br>
+        <div>
+            <form action="" method="POST" enctype="multipart/form-data">
+                {{ form.hidden_tag() }}
+
+                <div>
+                    {{ form.username.label() }} <br>
+                    {{ form.username() }}
+
+                    {% if form.username.errors %}
+                        {% for error in form.username.errors%}
+                            <small style="color: red;">{{ error }}</small><br>
+                        {% endfor %}
+                    {% endif %}
+                    <br><br>
+                </div>
+                <div>
+                    {{ form.email.label() }} <br>
+                    {{ form.email() }}
+
+                    {% if form.email.errors %}
+                        {% for error in form.email.errors %}
+                            <small style="color: red;">{{ error }}</small><br>
+                        {% endfor %}
+                    {% endif %}
+                    <br><br>
+                </div>
+                <div>
+                    {{ form.profile_pic.label}}
+                    {{ form.profile_pic()}}
+                    <br><br>
+                </div>
+                <div>
+                    {{ form.submit()}}
+                </div>
+            </form>
+        </div>
+    </article>
+{% endblock %}
