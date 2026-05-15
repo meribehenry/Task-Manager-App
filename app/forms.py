@@ -92,7 +92,7 @@ class UpdateAccountForm(FlaskForm):
         user = User.query.filter_by(username=username.data).first()
 
         if username.data != current_user.username:
-            if not username.data.isalum():
+            if not username.data.isalnum():
                 raise ValidationError(f"Username must contain only letters or numbers")
             
             if user:

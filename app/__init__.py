@@ -19,5 +19,7 @@ def create_app():
     app.register_blueprint(auth, url_prefix="/auth")
     from .task.routes import task
     app.register_blueprint(task, url_prefix="/task")
+    from .account.routes import account
+    app.register_blueprint(account, url_prefix="/account")
 
     return app
