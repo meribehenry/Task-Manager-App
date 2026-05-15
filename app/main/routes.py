@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template
 from flask_login import login_required
+from app.models import User
 
 main = Blueprint("main", __name__)
 
@@ -21,4 +22,5 @@ def dashboard():
 @main.route("/leaderboard")
 @login_required
 def leaderboard():
-    return render_template("main/leaderboard.html")
+    users = User.query.order_by(User.completed_task.desc()).limit(10)
+    return render_template("main/leaderboard.html", users=users)
