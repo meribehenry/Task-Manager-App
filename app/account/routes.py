@@ -16,11 +16,12 @@ def user_account():
         if form.profile_pic.data:
             profile_pic = save_picture(form.profile_pic.data)
             current_user.profile_pic = profile_pic
-
+        if not form.profile_pic.data and current_user.username == form.username.data and current_user.email==form.email.data:
+            return redirect(url_for("account.user_account"))
         current_user.username = form.username.data
         current_user.email = form.email.data
         db.session.commit()
-        flash("Account successfully updated")
+        flash("Account successfully updated", "success")
         return redirect(url_for("account.user_account"))
     
     elif request.method == "GET":

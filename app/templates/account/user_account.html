@@ -33,6 +33,12 @@
                 <div>
                     {{ form.profile_pic.label}}
                     {{ form.profile_pic()}}
+
+                    {% if form.profile_pic.errors %}
+                        {% for error in form.profile_pic.errors %}
+                            <br><small style="color: red;">{{ error }}</small><br>
+                        {% endfor %}
+                    {% endif %}
                     <br><br>
                 </div>
                 <div>

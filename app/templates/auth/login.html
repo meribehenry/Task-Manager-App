@@ -35,6 +35,9 @@
             </div>
             <div>
                 {{ form.submit()}}
+                <small>
+                    <a href="{{ url_for('auth.reset_request')}}">Forgot Password</a>
+                </small>
                 <br><br>
             </div>
         </form>
