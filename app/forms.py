@@ -104,3 +104,31 @@ class UpdateAccountForm(FlaskForm):
         if email.data.lower() != current_user.email:
             if user:
                 raise ValidationError(f"Email '{email.data}' already exists")
+            
+
+class ResetRequestForm(FlaskForm):
+    email = EmailField("Email", 
+                        validators=[
+                            DataRequired(message="Please enter this field"), 
+                            Email(message="Please enter a valid email"), 
+                            Length(max=100, message="Email cannot be more than 100 characters long")])
+    
+    submit = SubmitField("Reset")
+
+    def validate_email(self, email):
+        user = User.query.filter_by(email=email.data.lower()).first()
+        
+        if not user:
+            if user:
+                raise ValidationError(f"Email '{email.data}' doesn't exists. Try Siging Up")
+
+
+class ResetPasswordForm(FlaskForm): 
+    password = PasswordField("Password", 
+                            validators=[
+                                DataRequired(message="Please enter this field"),
+                                Length(min=5, message="Password must be atleast 5 characters long")])
+    
+    confirm_password = PasswordField("Confirm Password", validators=[DataRequired(), EqualTo("password")])
+
+    submit = SubmitField("Change")

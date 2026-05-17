@@ -1,6 +1,8 @@
 from datetime import datetime
+from flask import current_app
 from flask_login import UserMixin
 from app.extensions import db
+from itsdangerous import URLSafeTimedSerializer, SignatureExpired, BadSignature
 
 
 class User(db.Model, UserMixin):
@@ -19,6 +21,20 @@ class User(db.Model, UserMixin):
         Email: {self.email}
         Gender: {self.gender}
         """
+    
+    def get_reset_token(self):
+        s = URLSafeTimedSerializer(current_app.config["SECRET_KEY"])
+        return s.dumps({"user_id": self.id})
+    
+    @staticmethod
+    def verify_reset_token(token, max_age=1800):
+        s = URLSafeTimedSerializer(current_app.config["SECRET_KEY"])
+        try:
+            user_id = s.loads(token, max_age=max_age)["user_id"]
+            return User.query.get(user_id)
+        
+        except (BadSignature, SignatureExpired):
+            return None
 
 
 class Task(db.Model):
