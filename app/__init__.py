@@ -22,5 +22,7 @@ def create_app():
     app.register_blueprint(task, url_prefix="/task")
     from .account.routes import account
     app.register_blueprint(account, url_prefix="/account")
+    from .errors.error_handlers import errors
+    app.register_blueprint(errors, url_prefix="/error")
 
     return app
