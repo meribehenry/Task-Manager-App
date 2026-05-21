@@ -3,19 +3,21 @@ from flask import current_app
 from PIL import Image
 import secrets
 import os
+import cloudinary.uploader
+
 
 def save_picture(picture):
-    filename = secure_filename(picture.filename)
-    _, file_ext = os.path.splitext(filename)
-    random_hex = secrets.token_hex(8)
-    picture_name = random_hex + file_ext
-    picture_path = os.path.join(current_app.config["UPLOAD_FOLDER"] + f'/{picture_name}')
+    picture_id = secrets.token_hex(16)
 
-    output_size = (100, 100)
-    resized_picture = Image.open(picture)
-    resized_picture.thumbnail(output_size)
-    resized_picture.save(picture_path)
+    result = cloudinary.uploader.upload(
+        picture,
+        public_id = picture_id,
+        folder = "profile_pics",
+        resource_type = "auto"      
+    )
 
-    return picture_name
+    return result["secure_url"], picture_id
 
 
+def delete_picture(picture_id):
+    cloudinary.uploader.destory(picture_id, resource_type="image" invalidate=True)
