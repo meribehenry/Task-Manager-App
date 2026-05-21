@@ -2,6 +2,8 @@ from app.extensions import db, bcrypt, login_manager, migrate
 from flask import Flask
 from config import Config
 from app.extensions import mail
+import cloudinary
+import os
 
 def create_app():
     app = Flask(__name__)
@@ -13,6 +15,13 @@ def create_app():
     login_manager.init_app(app)
     login_manager.login_view = "auth.login"
     mail.init_app(app)
+
+    cloudinary.config(
+    cloud_name = os.environ.get("CLOUDINARY_CLOUD_NAME"),
+    api_key = os.environ.get("CLOUDINARY_API_KEY"),
+    api_secret = os.environ.get("CLOUDINARY_API_SECRET"),
+    secure = True
+)
 
     from .main.routes import main
     app.register_blueprint(main)
