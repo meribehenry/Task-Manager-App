@@ -34,7 +34,7 @@ class User(db.Model, UserMixin):
     def verify_reset_token(token, max_age=1800):
         s = URLSafeTimedSerializer(current_app.config["SECRET_KEY"])
         try:
-            data = s.loads(token, max_age=max_age)["user_id"]
+            data = s.loads(token, max_age=max_age)
             user_id = data["user_id"]
             password_hash = data["password_hash"]
         

@@ -20,4 +20,4 @@ def save_picture(picture):
 
 
 def delete_picture(picture_id):
-    cloudinary.uploader.destory(picture_id, resource_type="image" invalidate=True)
+    cloudinary.uploader.destory(picture_id, resource_type="image", invalidate=True)

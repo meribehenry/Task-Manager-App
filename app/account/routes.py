@@ -19,7 +19,7 @@ def user_account():
 
             if current_user.profile_pic_id != "default":
                 delete_picture(current_user.profile_pic_id)
-                current_user.profile_pic_url, current_user.profile_pic_id = profile_pic_url, profile_pic_id
+            current_user.profile_pic_url, current_user.profile_pic_id = profile_pic_url, profile_pic_id
 
         if not form.profile_pic.data and current_user.username == form.username.data and current_user.email==form.email.data:
             return redirect(url_for("account.user_account"))

@@ -86,8 +86,13 @@ def reset_password(token):
             flash("Reset token is invalid or has expired", "danger")
             return redirect(url_for("auth.reset_request"))
         
+        if bcrypt.check_password_hash(user.password, form.password.data):
+            flash("New password cannot be the same as the old password", "danger")
+            return redirect(url_for("auth.reset_password", token=token))
+
         user.password = bcrypt.generate_password_hash(form.password.data).decode("utf-8")
         db.session.commit()
         flash("Password successfully changed", "success")
         return redirect(url_for("auth.login"))
+
     return render_template("auth/reset_password.html", form=form, title="Reset Password")
