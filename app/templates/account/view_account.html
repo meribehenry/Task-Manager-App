@@ -2,7 +2,7 @@
 {% block content %}
     <article style="display: contents;">
         <br><br>
-        <a href="{{current_user.profile_pic_url}}" target="_blank"><img src="{{ current_user.profile_pic_url }}" alt="Profile Picture" width="100" height="100" style="border-radius: 100%;"></a>
+        <a href="{{user.profile_pic_url}}" target="_blank"><img src="{{ user.profile_pic_url }}" alt="Profile Picture" width="100" height="100" style="border-radius: 100%;"></a>
         <br><br>
         <h3>Account</h3>
         <p>Name: {{ user.username }}</p>
