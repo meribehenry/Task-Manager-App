@@ -62,13 +62,18 @@ def reset_request():
     form = ResetRequestForm()
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
+
+        if not user:
+            flash("No account found with that email", "danger")
+            return redirect(url_for("auth.reset_request"))
+        
         send_reset_email(user)
         flash("A message was sent to your email with the reset password link", "success")
         return redirect(url_for("auth.login"))
     return render_template("auth/reset_request.html", form=form, title="Reset Password")
 
 
-@auth.route("/reset_password<token>", methods=["GET", "POST"])
+@auth.route("/reset_password/<token>", methods=["GET", "POST"])
 def reset_password(token):
     if current_user.is_authenticated:
         return redirect("main.dashboard")
@@ -76,9 +81,11 @@ def reset_password(token):
     form = ResetPasswordForm()
     if form.validate_on_submit():
         user = User.verify_reset_token(token)
+        
         if not user:
             flash("Reset token is invalid or has expired", "danger")
             return redirect(url_for("auth.reset_request"))
+        
         user.password = bcrypt.generate_password_hash(form.password.data).decode("utf-8")
         db.session.commit()
         flash("Password successfully changed", "success")
